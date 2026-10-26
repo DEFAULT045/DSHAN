@@ -19,13 +19,12 @@ jobs:
         with:
           node-version: 24
 
-      - uses: android-actions/setup-android@v3
-
-      - name: 安装 SDK / NDK / CMake
+      - - name: 安装 SDK / NDK / CMake
         shell: pwsh
         run: |
-          sdkmanager "platforms;android-34" "build-tools;34.0.0" "cmake;3.22.1" "ndk;26.1.10909125"
-
+          $sm = "$env:ANDROID_HOME\cmdline-tools\latest\bin\sdkmanager.bat"
+          "y`n" * 20 | & $sm --licenses | Out-Null
+          & $sm "platforms;android-34" "build-tools;34.0.0" "cmake;3.22.1" "ndk;26.1.10909125"
       - uses: gradle/actions/setup-gradle@v4
 
       - name: 下载并校验 Node 运行时
